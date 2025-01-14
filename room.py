@@ -1,4 +1,12 @@
-# Define the Room class.
+# Defintion de la classe Room
+
+# cette classe defini l'ensemble des les lieux , les connections entre eux 
+
+# les attributs de cette classe sont name, description, exits
+
+#les methodes sont get_exist, get_exist_string, get_long_description
+
+# room1 = Room("Forêt enchantée", "Une clairière mystérieuse illuminée par des lucioles.", {"nord": None}) >>> print(room1.name) >>>Forêt enchantée
 
 class Room:
 

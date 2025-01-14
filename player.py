@@ -1,4 +1,12 @@
-# Define the Player class.
+# Defini le joueur
+
+#les attributs de cette classe sont , name, current_room
+
+# la methode de cette classe est move
+
+#player = Player("Alice", room1) >>> print(player.name) >>>Alice
+
+
 class Player():
 
     # Define the constructor.
