@@ -28,7 +28,11 @@ class Game:
         self.commands["quit"] = quit
         go = Command("go", " <direction> : se déplacer dans une direction cardinale (N, E, S, O)", Actions.go, 1)
         self.commands["go"] = go
-        
+        history = Command("history", " : afficher l'historique", Actions.history, 0)
+        self.commands["history"] = history
+        back = Command("back", " : revenir en arriere", Actions.back, 0)
+        self.commands["back"] = back
+
         # Setup rooms
 
         demeure_inventeur = Room("Demeure de l’Inventeur", "Une villa en ruines avec des secrets enfouis.")
@@ -79,7 +83,7 @@ class Game:
 
         self.player = Player(input("\nEntrez votre nom: "))
         self.player.current_room = demeure_inventeur
-
+        self.player.history.append(self.player.current_room)
     # Play the game
     def play(self):
         self.setup()
