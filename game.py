@@ -30,32 +30,54 @@ class Game:
         
         # Setup rooms
 
-        forest = Room("Forest", "dans une forêt enchantée. Vous entendez une brise légère à travers la cime des arbres.")
-        self.rooms.append(forest)
-        tower = Room("Tower", "dans une immense tour en pierre qui s'élève au dessus des nuages.")
-        self.rooms.append(tower)
-        cave = Room("Cave", "dans une grotte profonde et sombre. Des voix semblent provenir des profondeurs.")
-        self.rooms.append(cave)
-        cottage = Room("Cottage", "dans un petit chalet pittoresque avec un toit de chaume. Une épaisse fumée verte sort de la cheminée.")
-        self.rooms.append(cottage)
-        swamp = Room("Swamp", "dans un marécage sombre et ténébreux. L'eau bouillonne, les abords sont vaseux.")
-        self.rooms.append(swamp)
-        castle = Room("Castle", "dans un énorme château fort avec des douves et un pont levis. Sur les tours, des flèches en or massif.")
-        self.rooms.append(castle)
+        demeure_inventeur = Room("Demeure de l’Inventeur", "Une villa en ruines avec des secrets enfouis.")
+        self.rooms.append(demeure_inventeur)
+        foret_ombres = Room("Forêt des Ombres", "Une forêt dense où la lumière est absorbée par les arbres.")
+        self.rooms.append(foret_ombres)
+        bibliotheque_engloutie = Room("Bibliothèque Engloutie", "Un temple submergé rempli de livres magiques.")
+        self.rooms.append(bibliotheque_engloutie)
+        volcan_eteint = Room("Volcan Éteint", "Une montagne endormie renfermant une forge abandonnée.")
+        self.rooms.append(volcan_eteint)
+        labyrinthe_verre = Room("Labyrinthe de Verre", "Un labyrinthe où les murs reflètent des illusions.")
+        self.rooms.append(labyrinthe_verre)
+        tour_etoiles = Room("Tour des Étoiles", "Une tour utilisée comme observatoire astronomique.")
+        self.rooms.append(tour_etoiles)
+        cimetiere_navires = Room("Cimetière des Navires", "Une baie où plusieurs épaves sont échouées.")
+        self.rooms.append(cimetiere_navires)
+        palais_reflets = Room("Palais des Reflets", "Une ancienne forteresse avec des salles couvertes de miroirs.")
+        self.rooms.append(palais_reflets)
+        sanctuaire_idees = Room("Sanctuaire des Idées", "Une salle secrète sous la Demeure de l’Inventeur.")
+        self.rooms.append(sanctuaire_idees)
+        forge_cachee = Room("Forge Cachée", "Une forge ancienne au cœur du volcan.")
+        self.rooms.append(forge_cachee)
+        plateforme_mystique = Room("Plateforme Mystique", "Une plateforme flottante au-dessus du Labyrinthe de Verre.")
+        self.rooms.append(plateforme_mystique)
+        niveaux_submerges = Room("Niveaux Submergés", "Les parties inondées de la Bibliothèque Engloutie.")
+        self.rooms.append(niveaux_submerges)
+        cales_sous_marines = Room("Cales Sous-Marines", "Les cales immergées des épaves du Cimetière des Navires.")
+        self.rooms.append(cales_sous_marines)
+        salle_sommet_palais = Room("Salle Sommet du Palais", "Une pièce secrète au sommet du Palais des Reflets.")
+        self.rooms.append(salle_sommet_palais)
 
         # Create exits for rooms
+        
+        demeure_inventeur.exits = {"N": foret_ombres, "S": None, "E": volcan_eteint, "O": None, "U": None, "D": sanctuaire_idees}
+        foret_ombres.exits = {"N": labyrinthe_verre, "S": demeure_inventeur, "E": None, "O": cimetiere_navires, "U": None, "D": None}
+        bibliotheque_engloutie.exits = {"N": None, "S": tour_etoiles, "E": None, "O": None, "U": None, "D": niveaux_submerges}
+        volcan_eteint.exits = {"N": labyrinthe_verre, "S": None, "E": None, "O": demeure_inventeur, "U": None, "D": forge_cachee}
+        labyrinthe_verre.exits = {"N": None, "S": volcan_eteint, "E": palais_reflets, "O": None, "U": plateforme_mystique, "D": None}
+        tour_etoiles.exits = {"N": None, "S": bibliotheque_engloutie, "E": None, "O": labyrinthe_verre, "U": plateforme_mystique, "D": None}
+        cimetiere_navires.exits = {"N": None, "S": None, "E": foret_ombres, "O": None, "U": None, "D": cales_sous_marines}
+        palais_reflets.exits = {"N": None, "S": None, "E": None, "O": labyrinthe_verre, "U": salle_sommet_palais, "D": None}
 
-        forest.exits = {"N" : cave, "E" : tower, "S" : castle, "O" : None}
-        tower.exits = {"N" : cottage, "E" : None, "S" : swamp, "O" : forest}
-        cave.exits = {"N" : None, "E" : cottage, "S" : forest, "O" : None}
-        cottage.exits = {"N" : None, "E" : None, "S" : tower, "O" : cave}
-        swamp.exits = {"N" : tower, "E" : None, "S" : None, "O" : castle}
-        castle.exits = {"N" : forest, "E" : swamp, "S" : None, "O" : None}
+        
+
+
 
         # Setup player and starting room
 
         self.player = Player(input("\nEntrez votre nom: "))
-        self.player.current_room = swamp
+        self.player.current_room = demeure_inventeur
 
     # Play the game
     def play(self):

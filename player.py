@@ -13,6 +13,7 @@ class Player():
     def __init__(self, name):
         self.name = name
         self.current_room = None
+        self.used_directions = []
     
     # Define the move method.
     def move(self, direction):

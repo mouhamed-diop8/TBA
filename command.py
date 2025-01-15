@@ -35,11 +35,20 @@ class Command:
         self.help_string = help_string
         self.action = action
         self.number_of_parameters = number_of_parameters
+        self.valid_directions = {"N", "S", "E", "O", "U", "D"}  # Initialisation des directions valides.
     
     # The string representation of the command.
     def __str__(self):
         return  self.command_word \
                 + self.help_string
     
+ # Fonction pour exécuter l'action de déplacement et vérifier si la direction est valide.
+    def go(self, direction):
+        if direction in self.valid_directions:
+            # Exécuter l'action de déplacement ici, par exemple, en appelant une méthode correspondante.
+            print(f"Vous vous déplacez vers la direction : {direction}")
+            # Code d'action pour le déplacement...
+        else:
+            print(f"Erreur : La direction '{direction}' n'est pas valide.")
 
 
