@@ -1,18 +1,18 @@
 # class Actions:
     
-    def go(game, list_of_words, number_of_parameters):
-        """
-     Déplace le joueur dans la direction spécifiée par le paramètre.
-    Le paramètre doit être une direction cardinale (N, E, S, O).
+def go(game, list_of_words, number_of_parameters):
+        
+    # Déplace le joueur dans la direction spécifiée par le paramètre.
+    #Le paramètre doit être une direction cardinale (N, E, S, O).
 
-        Args:
+        #Args:
             game (Game): L'objet jeu.
             list_of_words (list): La liste des mots dans la commande.
             number_of_parameters (int): Le nombre de paramètres attendus par la commande.
 
         Returns:
             bool: True si la commande a été exécutée avec succès, False sinon.
-        """
+
         
         player = game.player
         l = len(list_of_words)
