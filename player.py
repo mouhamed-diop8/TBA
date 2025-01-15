@@ -29,21 +29,17 @@ class Player():
             self.used_directions.append(normalized_direction)  # Enregistrer la direction utilisée
             print(f"Déplacement vers {self.current_room.name}")
 
-    def get_history (self):
-        
-        #Retourne une chaîne de caractères représentant l'historique des pièces visitées.
-            if not self.history:
-                return "Aucune pièce visitée pour le moment."
-            return "Historique des pièces visitées : " + " -> ".join(room.name for room in self.history)
-
-
 
         # If the next room is None, print an error message and return False.
         if next_room is None:
             print("\nAucune porte dans cette direction !\n")
-            return False
+        return False
         
-        # Set the current room to the next room.
-        self.current_room = next_room
-        print(self.current_room.get_long_description())
-        return True
+        
+
+    def get_history (self):
+        
+        #Retourne une chaîne de caractères représentant l'historique des pièces visitées.
+        if not self.history:
+            return "Aucune pièce visitée pour le moment."
+        return "Historique des pièces visitées : " + " -> ".join(room.name for room in self.history)
