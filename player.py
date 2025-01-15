@@ -29,7 +29,7 @@ class Player():
             self.used_directions.append(normalized_direction)  # Enregistrer la direction utilisée
             print(f"Déplacement vers {self.current_room.name}")
 
-        def get_history(self):
+    def get_history (self):
         
         #Retourne une chaîne de caractères représentant l'historique des pièces visitées.
             if not self.history:
