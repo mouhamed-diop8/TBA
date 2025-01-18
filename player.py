@@ -10,11 +10,14 @@
 class Player():
 
 # Define the constructor.
-    def __init__(self, name):
+    def __init__(self, name,max_weight=10):
         self.name = name
         self.current_room = None
         self.used_directions = []
         self.history = []
+        self.inventory = []  # Inventaire du joueur
+        self.max_weight = max_weight  # Poids maximum que le joueur peut transporter
+        self.current_weight = 0  # Poids total actuel des objets dans l'inventaire
     
     # Define the move method.
     def move(self, direction):
@@ -43,3 +46,85 @@ class Player():
         if not self.history:
             return "Aucune pièce visitée pour le moment."
         return "Historique des pièces visitées : " + " -> ".join(room.name for room in self.history)
+
+
+    def add_item_to_inventory(self, item):
+        """
+        Ajoute un objet à l'inventaire du joueur.
+        """
+        if item.name in self.inventory:
+            print(f"L'objet '{item.name}' est déjà dans votre inventaire.")
+        else:
+            self.inventory[item.name] = item
+            print(f"Vous avez ajouté '{item.name}' à votre inventaire.")
+
+    def remove_item_from_inventory(self, item_name):
+        """
+        Retire un objet de l'inventaire du joueur.
+        """
+        if item_name in self.inventory:
+            removed_item = self.inventory.pop(item_name)
+            print(f"Vous avez retiré '{item_name}' de votre inventaire.")
+            return removed_item
+        else:
+            print(f"L'objet '{item_name}' n'est pas dans votre inventaire.")
+            return None
+
+    def get_inventory(self):
+        """
+        Retourne une chaîne de caractères représentant le contenu de l'inventaire.
+        """
+        if not self.inventory:
+            return "Votre inventaire est vide."
+        else:
+            inventory_description = "Vous disposez des items suivants :"
+            for item in self.inventory.values():
+                inventory_description += f"\n    - {item}"
+            return inventory_description
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+class Beamer:
+    def __init__(self):
+        self.loaded_room = None  # La pièce chargée dans le beamer
+
+    def load(self, room):
+        """Charger la pièce dans le beamer."""
+        self.loaded_room = room
+        print(f"Vous avez chargé la pièce '{room.description}' dans le beamer.")
+
+    def use(self, player):
+        """Utiliser le beamer pour se téléporter."""
+        if self.loaded_room:
+            player.move_to(self.loaded_room)
+            print(f"Vous avez été téléporté dans la pièce : '{self.loaded_room.description}'.")
+        else:
+            print("Erreur : Le beamer n'a pas encore de pièce chargée.")
+
+
+
+
+class Door:
+    def __init__(self, locked=True):
+        self.locked = locked  # La porte est verrouillée par défaut
+        self.key = None  # La clé de la porte
+
+    def unlock(self, player):
+        """Déverrouiller la porte avec la clé."""
+        if self.key in player.inventory:
+            self.locked = False
+            print("Vous avez déverrouillé la porte avec la clé.")
+        else:
+            print("Erreur : Vous n'avez pas la clé pour déverrouiller la porte.")

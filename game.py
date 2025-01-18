@@ -15,7 +15,8 @@ class Game:
         self.finished = False
         self.rooms = []
         self.commands = {}
-        self.player = None
+        self.current_room = None  # Pièce actuelle
+        
     
     # Setup the game
     def setup(self):
@@ -32,6 +33,14 @@ class Game:
         self.commands["history"] = history
         back = Command("back", " : revenir en arriere", Actions.back, 0)
         self.commands["back"] = back
+        take = Command("take", " <item> : prendre un objet", Actions.take, 1)  # Commande take
+        self.commands["take"] = take
+        drop = Command("drop", " <item> : déposer un objet", Actions.drop, 1)  # Commande drop
+        self.commands["drop"] = drop
+        check = Command("check", " : vérifier l'inventaire du joueur", Actions.check, 0)  # Commande check
+        self.commands["check"] = check
+        look = Command("look", " : observer l'environnement actuel", Actions.look, 0)  # Commande look
+        self.commands["look"] = look
 
         # Setup rooms
 
@@ -116,12 +125,32 @@ class Game:
         print("Entrez 'help' si vous avez besoin d'aide.")
         #
         print(self.player.current_room.get_long_description())
-    
+
+
+
+
+
+
+        
+
+    def move_to(self, room):
+        self.current_room = room  # Déplacer le joueur dans une nouvelle pièce
+
+    def execute_command(self, command, *args):
+        if command == "look":
+            self.current_room.look()  # Afficher les items dans la pièce
+        elif command == "take" and args:
+            self.player.take(args[0], self.current_room)  # Prendre l'item
+        elif command == "drop" and args:
+            self.player.drop(args[0], self.current_room)  # Reposer l'item
+        elif command == "check":
+            self.player.check()  # Vérifier l'inventaire du joueur
+
 
 def main():
     # Create a game object and play the game
     Game().play()
-    
+
 
 if __name__ == "__main__":
     main()

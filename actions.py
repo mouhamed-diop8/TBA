@@ -204,3 +204,61 @@ class Actions:
 
         print(f"\nVous êtes retourné dans : {player.current_room.name}\n")
         return True
+    def check(game, list_of_words, number_of_parameters):
+        player = game.player
+        if number_of_parameters == 0:  # Aucune autre entrée nécessaire
+            if player.inventory:
+                print("Votre inventaire contient :")
+                for item in player.inventory:
+                    print(f"- {item['name']} (Poids: {item['weight']}kg)")
+            else:
+                print("Votre inventaire est vide.")
+        else:
+            print("Erreur : cette commande ne nécessite aucun argument.")
+
+
+    def take(game, list_of_words, number_of_parameters):
+        player = game.player
+        if number_of_parameters == 1:
+            item_name = list_of_words[1]  # Récupérer le nom de l'item
+            item = None
+            for i in player.current_room.items:
+                if i['name'] == item_name:
+                    item = i
+                    break
+            if item:
+                player.take(item, player.current_room)  # Appeler la méthode take du joueur
+            else:
+                print(f"L'objet '{item_name}' n'est pas dans cette pièce.")
+        else:
+            print("Erreur : vous devez spécifier un objet à prendre.")
+
+
+    
+
+    def look(game, list_of_words, number_of_parameters):
+        player = game.player
+        if player.current_room.dark:
+            if any(item['name'] == 'torche' for item in player.inventory):
+                print("La torche éclaire la pièce.")
+                player.current_room.dark = False  # La torche permet d'éclairer la pièce
+            else:
+                print("La pièce est trop sombre pour voir.")
+        print(player.current_room.description)
+        if player.current_room.items:
+            print("Items dans la pièce :")
+            for item in player.current_room.items:
+                print(f"- {item['name']}")
+
+    def drop(game, list_of_words, number_of_parameters):
+        player = game.player
+        if number_of_parameters == 1:  # Vérifier qu'il y a un paramètre, l'objet à déposer
+            item_name = list_of_words[1]  # Récupérer le nom de l'objet à déposer
+            if item_name in player.inventory:  # Vérifier si l'objet est dans l'inventaire
+                player.inventory.remove(item_name)  # Retirer l'item de l'inventaire
+                player.current_room.items.append(item_name)  # Ajouter l'item dans la pièce
+                print(f"Vous avez déposé l'objet '{item_name}'.")  # Message de succès
+            else:
+                print(f"Erreur : Vous n'avez pas l'objet '{item_name}' dans votre inventaire.")  # Message d'erreur
+        else:
+            print("Erreur : Cette commande nécessite un objet à déposer.")

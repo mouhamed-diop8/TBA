@@ -11,11 +11,13 @@
 class Room:
 
     # Define the constructor. 
-    def __init__(self, name, description):
+    def __init__(self, name, description,items=None, dark=False):
         self.name = name
         self.description = description
         self.exits = {}
-    
+        self.inventory = {}
+        self.items = items if items else [] 
+        self.dark = dark 
     # Define the get_exit method.
     def get_exit(self, direction):
 
@@ -37,3 +39,43 @@ class Room:
     # Return a long description of this room including exits.
     def get_long_description(self):
         return f"\nVous êtes {self.description}\n\n{self.get_exit_string()}\n"
+
+
+
+    def add_item_to_inventory(self, item):
+        """
+        Ajoute un objet à l'inventaire de la pièce.
+        """
+        if item.name in self.inventory:
+            print(f"L'objet '{item.name}' est déjà dans cette pièce.")
+        else:
+            self.inventory[item.name] = item
+            print(f"'{item.name}' a été ajouté à la pièce '{self.name}'.")
+
+    def remove_item_from_inventory(self, item_name):
+        """
+        Retire un objet de l'inventaire de la pièce.
+        """
+        if item_name in self.inventory:
+            removed_item = self.inventory.pop(item_name)
+            print(f"'{item_name}' a été retiré de la pièce '{self.name}'.")
+            return removed_item
+        else:
+            print(f"L'objet '{item_name}' n'est pas dans cette pièce.")
+            return None
+
+    def get_inventory(self):
+        """
+        Retourne une chaîne de caractères représentant le contenu de l'inventaire de la pièce.
+        """
+        if not self.inventory:
+            return "Il n'y a rien ici."
+        else:
+            inventory_description = "La pièce contient :"
+            for item in self.inventory.values():
+                inventory_description += f"\n    - {item}"
+            return inventory_description
+
+    
+  
+    
