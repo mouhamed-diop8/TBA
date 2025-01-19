@@ -6,6 +6,7 @@ from room import Room
 from player import Player
 from command import Command
 from actions import Actions
+from character import Character
 
 
 class Game:
@@ -85,6 +86,112 @@ class Game:
         palais_reflets.exits = {"N": None, "S": None, "E": None, "O": labyrinthe_verre, "U": salle_sommet_palais, "D": None}
 
         
+        
+
+        # Character class
+class Character:
+    def __init__(self, name, description, current_room, msgs):
+        self.name = name
+        self.description = description
+        self.current_room = current_room
+        self.msgs = msgs
+
+    def __str__(self):
+        return f"{self.name} : {self.description}"
+
+    def talk(self):
+        for msg in self.msgs:
+            print(msg)
+
+# Room class
+class Room:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+        self.exits = {}
+        self.items = []
+        self.characters = []
+
+    def get_long_description(self):
+        return f"{self.description}\nVous voyez ici : {', '.join([str(character) for character in self.characters])}"
+
+# Create characters
+professeur_eryas = Character(
+    "Professeur Eryas", 
+    "Un savant excentrique, autrefois réputé pour ses recherches sur la magie antique et la technologie.", 
+    None, 
+    ["Le Cœur… c’est l’équilibre entre l’homme et la nature. Si tu es digne, il te guidera."]
+)
+
+arkaia = Character(
+    "Arkaïa, la Gardienne des Îles", 
+    "Une créature mystique mi-humaine, mi-esprit de la mer, protectrice des secrets de l'archipel.", 
+    None, 
+    ["Les vagues murmurent des secrets aux audacieux, mais le prix à payer pour les entendre est lourd."]
+)
+
+azur = Character(
+    "Azur, le Voyageur Oublié", 
+    "Un marin d’un autre temps, figé dans le temps à cause d’un sortilège. Il se souvient vaguement de son passé.", 
+    None, 
+    ["Le vent porte les échos des voix perdues… mais tu devras naviguer dans le brouillard pour les entendre."]
+)
+
+syra = Character(
+    "Syra, la Magicienne des Runes", 
+    "Une magicienne ancienne qui a écrit des runes magiques pour protéger l’archipel. Elle offre des indices sur le Cœur.", 
+    None, 
+    ["Les étoiles t’indiqueront le chemin, mais seules les vérités cachées dans les ténèbres te feront avancer."]
+)
+
+# Create rooms and add characters
+bibliotheque_engloutie = Room("Bibliothèque Engloutie", "Une bibliothèque abandonnée, pleine de livres anciens.")
+bibliotheque_engloutie.characters.append(professeur_eryas)
+
+foret_ombres = Room("Forêt des Ombres", "Une forêt dense, où les arbres semblent murmurer.")
+foret_ombres.characters.append(arkaia)
+
+cimetiere_navires = Room("Cimetière des Navires", "Un lieu où des navires abandonnés gisent dans un brouillard éternel.")
+cimetiere_navires.characters.append(azur)
+
+tour_etoiles = Room("Tour des Étoiles", "Une tour mystique où les étoiles semblent plus proches, révélant des secrets anciens.")
+tour_etoiles.characters.append(syra)
+
+# Update room locations of the characters
+professeur_eryas.current_room = bibliotheque_engloutie
+arkaia.current_room = foret_ombres
+azur.current_room = cimetiere_navires
+syra.current_room = tour_etoiles
+
+# Method to interact with characters
+def talk_to_character(self, character_name):
+    character = next((c for c in self.player.current_room.characters if c.name.lower() == character_name.lower()), None)
+    if character:
+        print(f"\nVous parlez à {character.name} :")
+        character.talk()
+    else:
+        print(f"\nIl n'y a pas de personnage nommé {character_name} ici.")
+
+
+# Process command for talking
+def process_command(self, command_string):
+    list_of_words = command_string.split(" ")
+    command_word = list_of_words[0]
+    if command_word not in self.commands:
+        print(f"Commande '{command_word}' non reconnue.")
+    else:
+        command = self.commands[command_word]
+        if command_word != "talk":
+            command.action(self, list_of_words, command.number_of_parameters)
+        else:
+            self.talk_to_character(" ".join(list_of_words[1:]))
+
+
+
+
+
+
+
 
 
 
@@ -104,20 +211,18 @@ class Game:
         return None
 
     # Process the command entered by the player
-    def process_command(self, command_string) -> None:
-
-        # Split the command string into a list of words
+    def process_command(self, command_string):
         list_of_words = command_string.split(" ")
-
         command_word = list_of_words[0]
-
-        # If the command is not recognized, print an error message
-        if command_word not in self.commands.keys():
-            print(f"\nCommande '{command_word}' non reconnue. Entrez 'help' pour voir la liste des commandes disponibles.\n")
-        # If the command is recognized, execute it
+        if command_word not in self.commands:
+            print(f"Commande '{command_word}' non reconnue.")
         else:
             command = self.commands[command_word]
-            command.action(self, list_of_words, command.number_of_parameters)
+            if command_word != "talk":
+                command.action(self, list_of_words, command.number_of_parameters)
+            else:
+                self.talk_to_character(" ".join(list_of_words[1:]))
+
 
     # Print the welcome message
     def print_welcome(self):
