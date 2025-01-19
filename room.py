@@ -41,9 +41,9 @@ class Room:
   
 
     def get_long_description(self):
-    items_description = ', '.join([str(item) for item in self.items]) if self.items else "Aucun objet"
-    characters_description = ', '.join([str(character) for character in self.characters]) if self.characters else "Aucun personnage"
-    return f"{self.description}\nVous voyez ici :\nObjets : {items_description}\nPersonnages : {characters_description}"
+        items_description = ', '.join([str(item) for item in self.items]) if self.items else "Aucun objet"
+        characters_description = ', '.join([str(character) for character in self.characters]) if self.characters else "Aucun personnage"
+        return f"{self.description}\nVous voyez ici :\nObjets : {items_description}\nPersonnages : {characters_description}"
 
 
 

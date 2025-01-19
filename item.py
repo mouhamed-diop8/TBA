@@ -34,3 +34,22 @@ class Item:
 if __name__ == "__main__":
     sword = Item("sword", "une épée au fil tranchant comme un rasoir", 2)
     print(sword)
+
+
+
+
+
+
+
+
+
+
+
+def go(self, direction):
+        if direction in self.valid_directions:
+            # Exécuter l'action de déplacement ici, par exemple, en appelant une méthode correspondante.
+            print(f"Vous vous déplacez vers la direction : {direction}")
+            # Code d'action pour le déplacement...
+        else:
+            print(f"Erreur : La direction '{direction}' n'est pas valide.")
+

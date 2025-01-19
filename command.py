@@ -25,12 +25,34 @@ class Command:
                 + self.help_string
     
  # Fonction pour exécuter l'action de déplacement et vérifier si la direction est valide.
-    def go(self, direction):
-        if direction in self.valid_directions:
-            # Exécuter l'action de déplacement ici, par exemple, en appelant une méthode correspondante.
-            print(f"Vous vous déplacez vers la direction : {direction}")
-            # Code d'action pour le déplacement...
+    def go(game, list_of_words, number_of_parameters):
+        if number_of_parameters == 1:
+            direction_input = list_of_words[1].lower()  # Convertir la direction en minuscules
+            valid_directions = {
+                "n": "N", "nord": "N", "nord": "N",
+                "s": "S", "sud": "S", "sud": "S",
+                "e": "E", "est": "E", "est": "E",
+                "o": "O", "ouest": "O", "ouest": "O",
+                "u": "U", "haut": "U", "haut": "U",
+                "d": "D", "bas": "D", "bas": "D"
+            }
+            
+            # Vérification de la validité de la direction
+            if direction_input not in valid_directions:
+                print(f"\nDirection '{list_of_words[1]}' non reconnue.\n")
+                return False
+            
+            direction = valid_directions[direction_input]
+            
+            # Vérifier que la direction est valide dans les sorties de la pièce
+            if direction not in game.player.current_room.exits:
+                print(f"\nIl n'y a pas de sortie dans cette direction.\n")
+                return False
+            
+            # Déplacer le joueur
+            if game.player.move(direction):
+                print(f"\nDirection '{direction}' utilisée. Vous vous déplacez avec succès.")
+            else:
+                print(f"\nLe déplacement dans la direction '{direction}' a échoué.")
         else:
-            print(f"Erreur : La direction '{direction}' n'est pas valide.")
-
-
+            print("\nCommande invalide. Entrez 'go <direction>' pour vous déplacer.")
